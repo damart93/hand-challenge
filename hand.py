@@ -27,7 +27,7 @@ def right(memory, pointer):
 
 def left(memory, pointer):
     pointer -= 1
-    prepend_memory_value(memory, pointer)
+    memory, pointer = prepend_memory_value(memory, pointer)
     return memory, pointer
 
 def up(memory, pointer):
