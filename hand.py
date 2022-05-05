@@ -50,11 +50,11 @@ def bump_right(memory, pointer, instructions, index):
         while True:
             index +=1
             current_instruction = instructions[index]
-            if instructions[index] == '🤛':
+            if current_instruction == '🤛':
                 if needed_bumps == 0:
                     break
                 needed_bumps -= 1
-            elif instructions[index] == '🤜':
+            elif current_instruction == '🤜':
                 needed_bumps += 1
     return index
 
@@ -75,23 +75,6 @@ def bump_left(memory, pointer, instructions, index):
 def bump(memory, pointer):
     print(chr(memory[pointer]), end='')
 
-def decipher_instructions(instructions):
-    pointer = 0
-    memory = [0]
-    index = 0
-
-    while index < len(instructions):
-        current_instruction = instructions[index]
-        if current_instruction in movements_dict.keys():
-            memory, pointer = movements_dict[current_instruction](memory, pointer)
-        elif current_instruction in nest_dict.keys():
-            index = nest_dict[current_instruction](memory, pointer, instructions, index)
-        elif current_instruction in print_dict.keys():
-            print_dict[current_instruction](memory, pointer)
-        index +=1
-
-    print()
-
 movements_dict = {
     '👉': lambda x,y: right(x,y),
     '👈': lambda x,y: left(x,y),
@@ -108,6 +91,23 @@ nest_dict = {
 print_dict = {
     '👊': lambda x, y: bump(x,y)
 }
+
+def decipher_instructions(instructions):
+    pointer = 0
+    memory = [0]
+    index = 0
+
+    while index < len(instructions):
+        current_instruction = instructions[index]
+        if current_instruction in movements_dict.keys():
+            memory, pointer = movements_dict[current_instruction](memory, pointer)
+        elif current_instruction in nest_dict.keys():
+            index = nest_dict[current_instruction](memory, pointer, instructions, index)
+        elif current_instruction in print_dict.keys():
+            print_dict[current_instruction](memory, pointer)
+        index +=1
+
+    print()
 
 def main():
 
